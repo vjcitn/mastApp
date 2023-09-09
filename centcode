@@ -1,0 +1,5 @@
+get.centers <- function(im,thr="99%")
+{
+    dt <- imhessian(im) %$% { xx*yy - xy^2 } %>% threshold(thr) %>% label
+    as.data.frame(dt) %>% subset(value>0) %>% dplyr::group_by(value) %>% dplyr::summarise(mx=mean(x),my=mean(y))
+}
